@@ -1,0 +1,11 @@
+services:
+  postgres:
+    container_name: morgana-social
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: records
+      POSTGRES_USER: morgana
+      POSTGRES_PASSWORD: windy
+    ports:
+      - '5432:5432'
