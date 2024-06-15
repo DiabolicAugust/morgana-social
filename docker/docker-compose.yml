@@ -4,7 +4,7 @@ services:
     image: postgres
     restart: always
     environment:
-      POSTGRES_DB: records
+      POSTGRES_DB: social
       POSTGRES_USER: morgana
       POSTGRES_PASSWORD: windy
     ports:
