@@ -4,10 +4,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 export abstract class Person {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({
     unique: true,
@@ -19,7 +20,17 @@ export abstract class Person {
   })
   email: string;
 
+  @Column({ default: false })
+  emailVerified: boolean;
+
+  @Exclude({ toPlainOnly: true })
+  @Column({
+    nullable: true,
+  })
+  emailVerificationToken: string;
+
   @Column()
+  @Exclude({ toPlainOnly: true })
   password: string;
 
   @CreateDateColumn()

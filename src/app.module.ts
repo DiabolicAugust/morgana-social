@@ -3,6 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { AuthorizationModule } from './person/authorization/authorization.module';
+import { UserModule } from './person/user/user.module';
+import { GlobalElasticsearchModule } from './elasticsearch/global-elasticsearch.module.js';
 
 @Module({
   imports: [
@@ -15,6 +18,9 @@ import { ConfigModule } from '@nestjs/config';
       entities: [process.env.ENTITIES],
       synchronize: false,
     }),
+    AuthorizationModule,
+    UserModule,
+    GlobalElasticsearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
