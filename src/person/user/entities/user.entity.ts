@@ -4,7 +4,7 @@ import { ElasticsearchService } from '@nestjs/elasticsearch';
 import { Exclude, instanceToPlain } from 'class-transformer';
 
 @Entity('user')
-export abstract class User extends Person {
+export class User extends Person {
   @Column({ nullable: true })
   phoneNumber: string;
 

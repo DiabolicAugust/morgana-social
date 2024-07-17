@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity.js';
 import { Repository } from 'typeorm';
 import { Strings } from '../../data/strings.js';
-import { instanceToPlain } from 'class-transformer';
+import {
+  instanceToPlain,
+  plainToClass,
+  plainToInstance,
+} from 'class-transformer';
 import { Entities, Fields } from '../../data/enums.js';
 import { UpdateUserDto } from './entities/dto/update-user.dto.js';
 import { ElasticsearchService } from '@nestjs/elasticsearch';
@@ -25,6 +29,7 @@ export class UserService {
     //   id: id,
     // });
 
+    console.log('Searching with elastic search!');
     const user = await this.elasticService.search({
       index: 'users',
       body: {
@@ -42,9 +47,10 @@ export class UserService {
         HttpStatus.BAD_REQUEST,
       );
     }
-    console.log(user.hits.hits[0]._source);
 
-    return instanceToPlain(user.hits.hits[0]._source);
+    const userEntity = plainToInstance(User, user.hits.hits[0]._source);
+
+    return instanceToPlain(userEntity);
   }
 
   async update(id: string, dto: UpdateUserDto) {

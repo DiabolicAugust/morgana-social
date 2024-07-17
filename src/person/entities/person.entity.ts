@@ -5,11 +5,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { BaseEntity } from './base-entity.class.js';
 
-export abstract class Person {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Person extends BaseEntity {
   @Column({
     unique: true,
   })
@@ -32,10 +30,4 @@ export abstract class Person {
   @Column()
   @Exclude({ toPlainOnly: true })
   password: string;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

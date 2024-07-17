@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MoreThan, Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity.js';
 import { CreateUserDto } from '../user/entities/dto/create-user.dto.js';
-import { EncryptService } from '../authorization/utils/encryption.service.js';
+import { EncryptService } from './utils/encryption.service.js';
 import { instanceToPlain } from 'class-transformer';
 import { LoginUserDto } from '../user/entities/dto/login-user.dto.js';
 import { JwtService } from '@nestjs/jwt';
@@ -14,10 +14,10 @@ import { promisify } from 'util';
 import { randomBytes } from 'crypto';
 import { MailService } from '../../utils/mail.service.js';
 import { ValidateTokenDto } from '../user/entities/dto/validate-token.dto.js';
-import { Payload } from '../authorization/payload.dto.js';
+import { Payload } from './payload.dto.js';
 
 @Injectable()
-export class RegistrationService {
+export class AuthorizationService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly encryptionService: EncryptService,
