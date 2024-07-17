@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuthorizationController } from './authorization.controller';
-import { RegistrationService } from '../registration/registration.service';
+import { AuthorizationService } from './authorization.service';
 import { EncryptService } from './utils/encryption.service.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../user/entities/user.entity.js';
@@ -12,7 +12,7 @@ import { createMailerConfig } from '../../utils/mailer.config.js';
 
 @Module({
   controllers: [AuthorizationController],
-  providers: [RegistrationService, EncryptService, MailService],
+  providers: [AuthorizationService, EncryptService, MailService],
   imports: [
     ConfigModule.forRoot(),
     MailerModule.forRootAsync({

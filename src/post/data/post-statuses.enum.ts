@@ -1,0 +1,5 @@
+export enum PostStatus {
+  PUBLISHED = 'PUBLISHED',
+  UNDER_REVIEW = 'UNDER_REVIEW',
+  DELETED = 'DELETED',
+}

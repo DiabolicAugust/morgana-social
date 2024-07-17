@@ -8,24 +8,33 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class IdAuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<Request>();
     const token = this.extractTokenFromHeader(request);
     if (!token) {
-      console.log('Token not found');
       throw new UnauthorizedException('Token not found');
     }
     try {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET,
       });
-      console.log('Payload created:', payload);
+
+      // Attach the user payload to the request object
       request['user'] = payload;
+
+      // Extract the user ID from the request parameters
+      const userIdFromParams = request.params.id;
+      const userIdFromToken = payload.id;
+
+      // Check if the user ID from the parameters matches the ID in the JWT payload
+      if (userIdFromParams !== userIdFromToken) {
+        throw new UnauthorizedException('User ID does not match');
+      }
     } catch (error) {
-      console.log('Token verification failed:', error);
+      console.log(error);
       throw new UnauthorizedException('Invalid token or user ID');
     }
     return true;

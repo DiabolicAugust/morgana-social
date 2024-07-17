@@ -15,10 +15,11 @@ import {
 import { UserService } from './user.service.js';
 import { AllExceptionsFilter } from '../../filters/errors.filter.js';
 import { User } from './entities/user.entity.js';
-import { AuthGuard } from '../authorization/guards/auth.guard.js';
+import { IdAuthGuard } from '../authorization/guards/id-auth.guard.js';
 import { UpdateUserDto } from './entities/dto/update-user.dto.js';
 import { EmailVerifyTokenDto } from './entities/dto/email-verify-token.dto.js';
 import { Payload } from '../authorization/payload.dto.js';
+import { AuthGuard } from '../authorization/guards/auth.guard.js';
 
 @Controller('user')
 export class UserController {
@@ -30,10 +31,18 @@ export class UserController {
     return this.userService.getById(id);
   }
 
+  @Get('/')
+  @UseGuards(AuthGuard)
+  @UseFilters(new AllExceptionsFilter())
+  async getByToken(@Request() request: Request): Promise<Record<string, any>> {
+    const user = request['user'];
+    return this.userService.getById(user.id);
+  }
+
   @Patch('/:id')
   @UsePipes(ValidationPipe)
   @UseFilters(new AllExceptionsFilter())
-  @UseGuards(AuthGuard)
+  @UseGuards(IdAuthGuard)
   async updateById(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     return this.userService.update(id, dto);
   }
@@ -41,7 +50,7 @@ export class UserController {
   @Delete('/:id')
   @UsePipes(ValidationPipe)
   @UseFilters(new AllExceptionsFilter())
-  @UseGuards(AuthGuard)
+  @UseGuards(IdAuthGuard)
   async delete(@Param('id') id: string) {
     return this.userService.delete(id);
   }
