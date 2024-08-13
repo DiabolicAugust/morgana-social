@@ -8,6 +8,7 @@ import {
 import { ParentServiceClass } from '../../../parent.class.js';
 import { BaseEntity } from '../../../person/entities/base-entity.class.js';
 import { Payload } from '../payload.dto.js';
+import { Strings } from '../../../data/strings.js';
 
 @Injectable()
 export class IsAuthorGuard<T extends BaseEntity> implements CanActivate {
@@ -27,11 +28,10 @@ export class IsAuthorGuard<T extends BaseEntity> implements CanActivate {
     }
 
     if (entity['author'].id !== user.id) {
-      throw new ForbiddenException('You are not the author of this entity');
+      throw new ForbiddenException(Strings.notAuthor);
     }
 
-    if (entity['author'].id == user.id)
-      console.log('Requestor is an author of the entity');
+    if (entity['author'].id == user.id) console.log(Strings.isAuthor);
 
     return true;
   }

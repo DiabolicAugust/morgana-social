@@ -22,6 +22,12 @@ export const Strings = {
 
   emailAlreadyVerified: 'This email is already verified!',
   emailVerifySuccess: 'Your email was successfully verified!',
+  notAllowedApproveFriendship: 'You are not allowed to approve this friendship',
+  notAuthor: 'You are not the author of this entity',
+  isAuthor: 'Requestor is an author of the entity',
+
+  approvedFriendship: (owner: string, approver: string) =>
+    `${owner} and ${approver} are friends now`,
 
   capitalizeFirstLetterAndRemoveSymbols(str) {
     const parts = str.split('-');

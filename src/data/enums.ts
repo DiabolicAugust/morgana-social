@@ -14,4 +14,5 @@ export enum Entities {
   Post = 'Post',
   Like = 'Like',
   Comment = 'Comment',
+  Friends = 'Friends',
 }
