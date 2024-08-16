@@ -4,13 +4,9 @@ import {
   AfterRemove,
   AfterUpdate,
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 import { PostStatus } from '../data/post-statuses.enum.js';
 import { Like } from './like.entity.js';
